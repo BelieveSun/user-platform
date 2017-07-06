@@ -33,8 +33,8 @@ public interface UserMapper {
         "#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{nickname,jdbcType=VARCHAR}, #{identity,jdbcType=VARCHAR}, ",
         "#{roles,jdbcType=VARCHAR}, #{headimage,jdbcType=VARCHAR}, ",
-        "#{status,jdbcType=VARCHAR}, #{babyid,jdbcType=VARCHAR}, ",
-        "#{sex,jdbcType=INTEGER}, #{age,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR})"
+        "#{status,jdbcType=INTEGER}, #{babyid,jdbcType=VARCHAR}, ",
+        "#{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(User record);
@@ -69,10 +69,10 @@ public interface UserMapper {
           "identity = #{identity,jdbcType=VARCHAR},",
           "roles = #{roles,jdbcType=VARCHAR},",
           "headimage = #{headimage,jdbcType=VARCHAR},",
-          "status = #{status,jdbcType=VARCHAR},",
+          "status = #{status,jdbcType=INTEGER},",
           "babyid = #{babyid,jdbcType=VARCHAR},",
           "sex = #{sex,jdbcType=INTEGER},",
-          "age = #{age,jdbcType=VARCHAR},",
+          "age = #{age,jdbcType=INTEGER},",
           "realname = #{realname,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })

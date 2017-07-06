@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.believe.sun.user.mapper.RolesMapper">
-  <resultMap id="BaseResultMap" type="com.believe.sun.user.model.Roles">
+<mapper namespace="com.believe.sun.user.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.believe.sun.user.model.Role">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="role" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -70,13 +70,13 @@
   <sql id="Base_Column_List">
     id, role, descriotion, permission_id
   </sql>
-  <select id="selectByExample" parameterType="com.believe.sun.user.model.RolesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.believe.sun.user.model.RoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from roles
+    from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,17 +84,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.believe.sun.user.model.RolesExample">
-    delete from roles
+  <delete id="deleteByExample" parameterType="com.believe.sun.user.model.RoleExample">
+    delete from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insertSelective" parameterType="com.believe.sun.user.model.Roles">
+  <insert id="insertSelective" parameterType="com.believe.sun.user.model.Role">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into roles
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="role != null">
         role,
@@ -118,14 +118,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.believe.sun.user.model.RolesExample" resultType="java.lang.Long">
-    select count(*) from roles
+  <select id="countByExample" parameterType="com.believe.sun.user.model.RoleExample" resultType="java.lang.Long">
+    select count(*) from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update roles
+    update role
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -145,7 +145,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update roles
+    update role
     set id = #{record.id,jdbcType=INTEGER},
       role = #{record.role,jdbcType=VARCHAR},
       descriotion = #{record.descriotion,jdbcType=VARCHAR},
@@ -154,8 +154,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.believe.sun.user.model.Roles">
-    update roles
+  <update id="updateByPrimaryKeySelective" parameterType="com.believe.sun.user.model.Role">
+    update role
     <set>
       <if test="role != null">
         role = #{role,jdbcType=VARCHAR},

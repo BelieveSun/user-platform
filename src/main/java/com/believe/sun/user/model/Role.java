@@ -1,6 +1,6 @@
 package com.believe.sun.user.model;
 
-public class Roles {
+public class Role {
     private Integer id;
 
     private String role;
@@ -9,14 +9,14 @@ public class Roles {
 
     private String permissionId;
 
-    public Roles(Integer id, String role, String descriotion, String permissionId) {
+    public Role(Integer id, String role, String descriotion, String permissionId) {
         this.id = id;
         this.role = role;
         this.descriotion = descriotion;
         this.permissionId = permissionId;
     }
 
-    public Roles() {
+    public Role() {
         super();
     }
 

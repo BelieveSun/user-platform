@@ -14,3 +14,5 @@ spring.jackson.mapper.default-view-inclusion=true
 spring.jackson.serialization.indent_output=true
 
 logging.config=classpath:log4j2-spring.xml
+
+swagger.enable=true

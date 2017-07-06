@@ -143,7 +143,7 @@
             <!--<columnOverride column="" javaType=""    jdbcType="" typeHandler=""  delimitedColumnName="" />-->
 
         </table>
-        <table tableName="roles" domainObjectName="Roles">
+        <table tableName="role" domainObjectName="Role">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"></generatedKey>
         </table>
         <table tableName="baby" domainObjectName="Baby">

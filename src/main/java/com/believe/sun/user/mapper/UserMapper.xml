@@ -12,10 +12,10 @@
       <arg column="identity" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="roles" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="headimage" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="babyid" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="age" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="age" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
@@ -173,7 +173,7 @@
         #{headimage,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="babyid != null">
         #{babyid,jdbcType=VARCHAR},
@@ -182,7 +182,7 @@
         #{sex,jdbcType=INTEGER},
       </if>
       <if test="age != null">
-        #{age,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER},
       </if>
       <if test="realname != null">
         #{realname,jdbcType=VARCHAR},
@@ -226,7 +226,7 @@
         headimage = #{record.headimage,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.babyid != null">
         babyid = #{record.babyid,jdbcType=VARCHAR},
@@ -235,7 +235,7 @@
         sex = #{record.sex,jdbcType=INTEGER},
       </if>
       <if test="record.age != null">
-        age = #{record.age,jdbcType=VARCHAR},
+        age = #{record.age,jdbcType=INTEGER},
       </if>
       <if test="record.realname != null">
         realname = #{record.realname,jdbcType=VARCHAR},
@@ -256,10 +256,10 @@
       identity = #{record.identity,jdbcType=VARCHAR},
       roles = #{record.roles,jdbcType=VARCHAR},
       headimage = #{record.headimage,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
       babyid = #{record.babyid,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=INTEGER},
-      age = #{record.age,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
       realname = #{record.realname,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -293,7 +293,7 @@
         headimage = #{headimage,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="babyid != null">
         babyid = #{babyid,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
         sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="age != null">
-        age = #{age,jdbcType=VARCHAR},
+        age = #{age,jdbcType=INTEGER},
       </if>
       <if test="realname != null">
         realname = #{realname,jdbcType=VARCHAR},

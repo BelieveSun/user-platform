@@ -1,5 +1,7 @@
 package com.believe.sun.user.model;
 
+import com.believe.sun.user.form.UserForm;
+
 public class User {
     private Integer id;
 
@@ -19,17 +21,17 @@ public class User {
 
     private String headimage;
 
-    private String status;
+    private Integer status;
 
     private String babyid;
 
     private Integer sex;
 
-    private String age;
+    private Integer age;
 
     private String realname;
 
-    public User(Integer id, String account, String cellphone, String email, String password, String nickname, String identity, String roles, String headimage, String status, String babyid, Integer sex, String age, String realname) {
+    public User(Integer id, String account, String cellphone, String email, String password, String nickname, String identity, String roles, String headimage, Integer status, String babyid, Integer sex, Integer age, String realname) {
         this.id = id;
         this.account = account;
         this.cellphone = cellphone;
@@ -48,6 +50,12 @@ public class User {
 
     public User() {
         super();
+    }
+
+    public User(UserForm userForm) {
+        this.account = userForm.getAccount();
+        this.password = userForm.getPassword();
+        this.cellphone = userForm.getCellphone();
     }
 
     public Integer getId() {
@@ -122,12 +130,12 @@ public class User {
         this.headimage = headimage == null ? null : headimage.trim();
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getBabyid() {
@@ -146,12 +154,12 @@ public class User {
         this.sex = sex;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
-        this.age = age == null ? null : age.trim();
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getRealname() {
@@ -160,5 +168,9 @@ public class User {
 
     public void setRealname(String realname) {
         this.realname = realname == null ? null : realname.trim();
+    }
+
+    public byte[] getCredentialsSalt() {
+        return null;
     }
 }
