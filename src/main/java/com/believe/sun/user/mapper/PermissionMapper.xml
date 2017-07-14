@@ -6,7 +6,7 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="descriotion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, name, descriotion, status
+    id, parent_id, name, description, status
   </sql>
   <select id="selectByExample" parameterType="com.believe.sun.user.model.PermissionExample" resultMap="BaseResultMap">
     select
@@ -103,8 +103,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="descriotion != null">
-        descriotion,
+      <if test="description != null">
+        description,
       </if>
       <if test="status != null">
         status,
@@ -117,8 +117,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="descriotion != null">
-        #{descriotion,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
@@ -143,8 +143,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.descriotion != null">
-        descriotion = #{record.descriotion,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=VARCHAR},
@@ -159,7 +159,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      descriotion = #{record.descriotion,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -174,8 +174,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="descriotion != null">
-        descriotion = #{descriotion,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},

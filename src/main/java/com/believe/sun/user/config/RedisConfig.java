@@ -1,6 +1,7 @@
 package com.believe.sun.user.config;
 
-import com.believe.sun.user.connection.JedisConnectionFactory;
+
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,15 +14,30 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.net.UnknownHostException;
 
 /**
  * Created by sungj on 17-6-26.
  */
 @Configuration
-@EnableConfigurationProperties(RedisProperties.class)
-@EnableRedisRepositories(basePackages = "com.believe.sun.user.dao",enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
+//@EnableConfigurationProperties(RedisProperties.class)
+//@EnableRedisRepositories(basePackages = "com.believe.sun.user.dao",enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
 public class RedisConfig {
+
+//    @Bean("sessionRedisTemplate")
+//    @Autowired
+//    public  RedisTemplate<String,Session> redisTemplate(
+//            RedisConnectionFactory redisConnectionFactory)
+//            throws UnknownHostException {
+//        RedisTemplate<String , Session> template = new RedisTemplate<>();
+//        template.setDefaultSerializer(new Jackson2JsonRedisSerializer<>(Session.class));
+//        template.setConnectionFactory(redisConnectionFactory);
+//        return template;
+//    }
 
 
 //    @Bean

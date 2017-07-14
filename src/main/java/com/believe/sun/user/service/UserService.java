@@ -1,8 +1,10 @@
 package com.believe.sun.user.service;
 
 import com.believe.sun.user.form.UserForm;
+import com.believe.sun.user.model.Permission;
 import com.believe.sun.user.model.User;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,13 +12,13 @@ import java.util.Set;
  */
 public interface UserService {
 
-    User creatUser(User user);
+    User createUser(User user);
 
     User findUser(User user);
 
-    Set<String> findRoles(String username);
+    List<Permission> findRoles(String username);
 
-    Set<String> findPermissions(String username);
+    List<Permission> findPermissions(String username);
 
     User findByUsername(String username);
 }

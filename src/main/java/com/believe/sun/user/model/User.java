@@ -29,9 +29,8 @@ public class User {
 
     private Integer age;
 
-    private String realname;
 
-    public User(Integer id, String account, String cellphone, String email, String password, String nickname, String identity, String roles, String headimage, Integer status, String babyid, Integer sex, Integer age, String realname) {
+    public User(Integer id, String account, String cellphone, String email, String password, String nickname, String identity, String roles, String headimage, Integer status, String babyid, Integer sex, Integer age) {
         this.id = id;
         this.account = account;
         this.cellphone = cellphone;
@@ -45,11 +44,6 @@ public class User {
         this.babyid = babyid;
         this.sex = sex;
         this.age = age;
-        this.realname = realname;
-    }
-
-    public User() {
-        super();
     }
 
     public User(UserForm userForm) {
@@ -57,6 +51,10 @@ public class User {
         this.password = userForm.getPassword();
         this.cellphone = userForm.getCellphone();
     }
+
+    public User() {}
+
+
 
     public Integer getId() {
         return id;
@@ -162,15 +160,4 @@ public class User {
         this.age = age;
     }
 
-    public String getRealname() {
-        return realname;
-    }
-
-    public void setRealname(String realname) {
-        this.realname = realname == null ? null : realname.trim();
-    }
-
-    public byte[] getCredentialsSalt() {
-        return null;
-    }
 }

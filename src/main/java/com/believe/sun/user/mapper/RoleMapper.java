@@ -23,9 +23,9 @@ public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into role (role, descriotion, ",
+        "insert into role (role, description, ",
         "permission_id)",
-        "values (#{role,jdbcType=VARCHAR}, #{descriotion,jdbcType=VARCHAR}, ",
+        "values (#{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, ",
         "#{permissionId,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
@@ -37,7 +37,7 @@ public interface RoleMapper {
 
     @Select({
         "select",
-        "id, role, descriotion, permission_id",
+        "id, role, description, permission_id",
         "from role",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -53,7 +53,7 @@ public interface RoleMapper {
     @Update({
         "update role",
         "set role = #{role,jdbcType=VARCHAR},",
-          "descriotion = #{descriotion,jdbcType=VARCHAR},",
+          "description = #{description,jdbcType=VARCHAR},",
           "permission_id = #{permissionId,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })

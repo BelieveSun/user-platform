@@ -7,15 +7,15 @@ public class Permission {
 
     private String name;
 
-    private String descriotion;
+    private String description;
 
     private String status;
 
-    public Permission(Integer id, Integer parentId, String name, String descriotion, String status) {
+    public Permission(Integer id, Integer parentId, String name, String description, String status) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
-        this.descriotion = descriotion;
+        this.description = description;
         this.status = status;
     }
 
@@ -47,12 +47,12 @@ public class Permission {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDescriotion() {
-        return descriotion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriotion(String descriotion) {
-        this.descriotion = descriotion == null ? null : descriotion.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getStatus() {

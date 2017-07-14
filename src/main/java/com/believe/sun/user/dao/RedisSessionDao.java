@@ -3,15 +3,19 @@ package com.believe.sun.user.dao;
 import com.believe.sun.user.model.Role;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
+import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by sungj on 17-6-26.
@@ -27,7 +32,8 @@ import java.util.List;
 public class RedisSessionDao extends AbstractSessionDAO implements CrudRepository<Session,String> {
 
     @Autowired
-    private RedisTemplate<Object,Object> redisTemplate;
+    private RedisTemplate redisTemplate;
+
 
     @Override
     @Autowired
@@ -49,14 +55,14 @@ public class RedisSessionDao extends AbstractSessionDAO implements CrudRepositor
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        this.findOne(sessionId.toString());
-        return null;
+        Session one = this.findOne(sessionId.toString());
+        return one;
 
     }
 
     @Override
     public void update(Session session) throws UnknownSessionException {
-
+        this.save(session);
     }
 
     @Override
@@ -71,9 +77,9 @@ public class RedisSessionDao extends AbstractSessionDAO implements CrudRepositor
 
     @Override
     public Session save(Session s) {
-        ValueOperations<Object, Object> operations = redisTemplate.opsForValue();
+        ValueOperations operations = redisTemplate.opsForValue();
         String key = "shiro:auth:session:"+s.getId();
-        operations.set(key,s,120000);
+        operations.set(key,s,30, TimeUnit.MINUTES);
         return s;
     }
 
@@ -85,9 +91,8 @@ public class RedisSessionDao extends AbstractSessionDAO implements CrudRepositor
     @Override
     public Session findOne(String s) {
         String key = "shiro:auth:session:"+s;
-        ValueOperations<Object, Object> objectObjectValueOperations = redisTemplate.opsForValue();
-        Object o = objectObjectValueOperations.get(s);
-        return (Session)o;
+        ValueOperations objectObjectValueOperations = redisTemplate.opsForValue();
+        return  (Session) objectObjectValueOperations.get(key);
     }
 
     @Override

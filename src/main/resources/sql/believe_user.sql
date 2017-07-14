@@ -47,7 +47,7 @@ CREATE TABLE `permission` (
   `id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(45) NOT NULL,
-  `descriotion` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
   `status` varchar(45) NOT NULL COMMENT '是否生效\n',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限列表\n';
@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(45) NOT NULL,
-  `descriotion` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
   `permission_id` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';

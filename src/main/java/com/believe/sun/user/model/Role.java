@@ -5,14 +5,14 @@ public class Role {
 
     private String role;
 
-    private String descriotion;
+    private String description;
 
     private String permissionId;
 
-    public Role(Integer id, String role, String descriotion, String permissionId) {
+    public Role(Integer id, String role, String description, String permissionId) {
         this.id = id;
         this.role = role;
-        this.descriotion = descriotion;
+        this.description = description;
         this.permissionId = permissionId;
     }
 
@@ -36,12 +36,12 @@ public class Role {
         this.role = role == null ? null : role.trim();
     }
 
-    public String getDescriotion() {
-        return descriotion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriotion(String descriotion) {
-        this.descriotion = descriotion == null ? null : descriotion.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getPermissionId() {
