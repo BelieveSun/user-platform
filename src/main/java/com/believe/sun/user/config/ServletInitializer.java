@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * Created by sungj on 17-6-5.
  */
-@SpringBootApplication(scanBasePackages = {"com.believe.sun"})
+@SpringBootApplication(scanBasePackages = {"com.believe.sun.user","com.believe.sun.shiro"})
 public class ServletInitializer extends SpringBootServletInitializer {
 
     private static Class<ServletInitializer> applicationClass = ServletInitializer.class;

@@ -1,5 +1,6 @@
 package com.believe.sun.user.api;
 
+import com.believe.sun.shiro.annotation.CacheValue;
 import com.believe.sun.user.model.Permission;
 import com.believe.sun.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class UserApi {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
     //select user
+
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity cUsers(@CacheValue String a){
+        return new ResponseEntity("Success",HttpStatus.OK);
+    }
 
     //delete user (status < 0)
     @RequestMapping("/{user}/permissions")
