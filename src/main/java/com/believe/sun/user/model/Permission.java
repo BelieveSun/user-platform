@@ -1,5 +1,7 @@
 package com.believe.sun.user.model;
 
+import com.believe.sun.user.form.PermissionForm;
+
 public class Permission {
     private Integer id;
 
@@ -9,14 +11,21 @@ public class Permission {
 
     private String description;
 
-    private String status;
+    private Integer status;
 
-    public Permission(Integer id, Integer parentId, String name, String description, String status) {
+    public Permission(Integer id, Integer parentId, String name, String description, Integer status) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
         this.description = description;
         this.status = status;
+    }
+
+    public Permission(PermissionForm form){
+        this.parentId = form.getParentId();
+        this.name = form.getName();
+        this.description = form.getDescription();
+        this.status = form.getStatus();
     }
 
     public Permission() {
@@ -55,11 +64,11 @@ public class Permission {
         this.description = description == null ? null : description.trim();
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

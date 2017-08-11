@@ -3,6 +3,8 @@ package com.believe.sun.user.mapper;
 import com.believe.sun.user.model.Role;
 import com.believe.sun.user.model.RoleExample;
 import java.util.List;
+
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -24,9 +26,9 @@ public interface RoleMapper {
 
     @Insert({
         "insert into role (role, description, ",
-        "permission_id)",
+        "permission_id, status)",
         "values (#{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, ",
-        "#{permissionId,jdbcType=VARCHAR})"
+        "#{permissionId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Role record);
@@ -35,9 +37,11 @@ public interface RoleMapper {
 
     List<Role> selectByExample(RoleExample example);
 
+    List<Role> selectByStatus(@Param("status") Integer status, PageBounds pageBounds);
+
     @Select({
         "select",
-        "id, role, description, permission_id",
+        "id, role, description, permission_id, status",
         "from role",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -54,7 +58,8 @@ public interface RoleMapper {
         "update role",
         "set role = #{role,jdbcType=VARCHAR},",
           "description = #{description,jdbcType=VARCHAR},",
-          "permission_id = #{permissionId,jdbcType=VARCHAR}",
+          "permission_id = #{permissionId,jdbcType=VARCHAR},",
+          "status = #{status,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Role record);

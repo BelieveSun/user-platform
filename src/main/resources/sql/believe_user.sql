@@ -48,7 +48,7 @@ CREATE TABLE `permission` (
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(45) NOT NULL,
   `description` varchar(45) DEFAULT NULL,
-  `status` varchar(45) NOT NULL COMMENT '是否生效\n',
+  `status` int(45) NOT NULL DEFAULT 0 COMMENT '是否生效\n',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限列表\n';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -65,6 +65,7 @@ CREATE TABLE `role` (
   `role` varchar(45) NOT NULL,
   `description` varchar(45) DEFAULT NULL,
   `permission_id` varchar(45) NOT NULL,
+  `status` int(45) NOT NULL DEFAULT 0 COMMENT '是否生效\n',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 /*!40101 SET character_set_client = @saved_cs_client */;

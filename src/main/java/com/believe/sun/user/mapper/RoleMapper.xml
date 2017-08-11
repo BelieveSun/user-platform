@@ -7,6 +7,7 @@
       <arg column="role" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="permission_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role, description, permission_id
+    id, role, description, permission_id, status
   </sql>
   <select id="selectByExample" parameterType="com.believe.sun.user.model.RoleExample" resultMap="BaseResultMap">
     select
@@ -83,6 +84,12 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role
+    where status = #{status}
   </select>
   <delete id="deleteByExample" parameterType="com.believe.sun.user.model.RoleExample">
     delete from role
@@ -105,6 +112,9 @@
       <if test="permissionId != null">
         permission_id,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="role != null">
@@ -115,6 +125,9 @@
       </if>
       <if test="permissionId != null">
         #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -139,6 +152,9 @@
       <if test="record.permissionId != null">
         permission_id = #{record.permissionId,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -149,7 +165,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       role = #{record.role,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      permission_id = #{record.permissionId,jdbcType=VARCHAR}
+      permission_id = #{record.permissionId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -165,6 +182,9 @@
       </if>
       <if test="permissionId != null">
         permission_id = #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

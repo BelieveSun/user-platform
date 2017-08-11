@@ -3,6 +3,8 @@ package com.believe.sun.user.mapper;
 import com.believe.sun.user.model.Permission;
 import com.believe.sun.user.model.PermissionExample;
 import java.util.List;
+
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +28,7 @@ public interface PermissionMapper {
         "insert into permission (parent_id, name, ",
         "description, status)",
         "values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})"
+        "#{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Permission record);
@@ -34,6 +36,8 @@ public interface PermissionMapper {
     int insertSelective(Permission record);
 
     List<Permission> selectByExample(PermissionExample example);
+
+    List<Permission> selectByStatus(@Param("status") Integer status, PageBounds pageBounds);
 
     @Select({
         "select",
@@ -55,7 +59,7 @@ public interface PermissionMapper {
         "set parent_id = #{parentId,jdbcType=INTEGER},",
           "name = #{name,jdbcType=VARCHAR},",
           "description = #{description,jdbcType=VARCHAR},",
-          "status = #{status,jdbcType=VARCHAR}",
+          "status = #{status,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Permission record);

@@ -95,6 +95,12 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where status = #{status}
+  </select>
   <delete id="deleteByExample" parameterType="com.believe.sun.user.model.UserExample">
     delete from user
     <if test="_parameter != null">

@@ -3,6 +3,8 @@ package com.believe.sun.user.mapper;
 import com.believe.sun.user.model.User;
 import com.believe.sun.user.model.UserExample;
 import java.util.List;
+
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -42,6 +44,17 @@ public interface UserMapper {
     int insertSelective(User record);
 
     List<User> selectByExample(UserExample example);
+
+    List<User> selectByStatus(@Param("status") Integer status, PageBounds pageBounds);
+
+    @Select({
+            "select",
+            "id, account, cellphone, email, password, nickname, identity, roles, headimage, ",
+            "status, babyid, sex, age, realname",
+            "from user"
+    })
+    @ResultMap("com.believe.sun.user.mapper.UserMapper.BaseResultMap")
+    List<User> selectAll(PageBounds pageBounds);
 
     @Select({
         "select",
