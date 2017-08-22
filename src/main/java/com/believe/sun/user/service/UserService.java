@@ -1,8 +1,10 @@
 package com.believe.sun.user.service;
 
+import com.believe.sun.tool.Error;
+import com.believe.sun.user.exception.UserNotFoundException;
 import com.believe.sun.user.model.Permission;
+import com.believe.sun.user.model.Role;
 import com.believe.sun.user.model.User;
-import com.believe.sun.user.util.Error;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public interface UserService {
 
     Error exist(User user);
 
-    User auth(User user);
+    User auth(User user) throws UserNotFoundException;
 
     User findUserByAccount(String account);
 
@@ -23,9 +25,11 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-    List<Permission> findRoles(String username);
+    List<Role> findRoles(User user);
 
-    List<Permission> findPermissions(String username);
+    List<Permission> findPermissions(User user);
 
     List<User> findAllUser(Integer status,Integer index,Integer size);
+
+    User findUserById(Integer userId);
 }

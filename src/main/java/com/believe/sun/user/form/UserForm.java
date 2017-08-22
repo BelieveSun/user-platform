@@ -3,14 +3,18 @@ package com.believe.sun.user.form;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by sungj on 17-6-6.
  */
 @ApiModel("用户表单")
 public class UserForm {
     @ApiModelProperty("账户")
+    @NotNull
     private String account;
     @ApiModelProperty("密码,前端应对密码进行BCrypt加密")
+    @NotNull
     private String password;
     @ApiModelProperty("电话号码")
     private String cellphone;
@@ -21,6 +25,7 @@ public class UserForm {
     @ApiModelProperty("宝贝的亲属身份（宝妈,宝爸...）")
     private String identity;
     @ApiModelProperty("角色id拼接字符串，以\",\"号分割")
+    @NotNull
     private String roles;
     @ApiModelProperty("头像地址")
     private String headimage;

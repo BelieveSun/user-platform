@@ -36,11 +36,8 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Permission createPermission(Permission permission) throws PermissionExistException {
-        PermissionExample example = new PermissionExample();
-        PermissionExample.Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo(permission.getName());
-        List<Permission> permissions = permissionMapper.selectByExample(example);
-        if(permissions != null && permissions.size() != 0){
+        Permission exist = findPermissionByName(permission.getName());
+        if (exist != null) {
             throw new PermissionExistException();
         }
         permissionMapper.insertSelective(permission);
@@ -50,7 +47,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void deletePermission(Integer permissionId) {
         Permission permission = permissionMapper.selectByPrimaryKey(permissionId);
-        if(permission != null && !Objects.equals(permission.getStatus(), Constants.STOP)){
+        if (permission != null && !Objects.equals(permission.getStatus(), Constants.STOP)) {
             permission.setStatus(Constants.STOP);
             permissionMapper.updateByPrimaryKeySelective(permission);
         }
@@ -58,7 +55,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> findNormalPermissions(Integer index, Integer size) {
-        return permissionMapper.selectByStatus(Constants.NORMAL, new PageBounds(index,size));
+        return permissionMapper.selectByStatus(Constants.NORMAL, new PageBounds(index, size));
     }
 
     @Override
@@ -66,21 +63,36 @@ public class PermissionServiceImpl implements PermissionService {
         List<Integer> permissionIds = new ArrayList<>();
         permissionIds.add(permissionId);
         List<Permission> permissions = findPermissionByIds(permissionIds);
-        if(permissions != null && permissions.size() > 0){
+        if (permissions != null && permissions.size() > 0) {
             return permissions.get(0);
         }
         return null;
     }
 
     @Override
-    public Permission updatePermission(Permission permission) throws PermissionNotFoundException {
-        int i = permissionMapper.updateByPrimaryKeySelective(permission);
-        if(i == 0){
-            Permission olePermission = permissionMapper.selectByPrimaryKey(permission.getId());
-            if(olePermission == null) {
-                throw new PermissionNotFoundException();
+    public Permission updatePermission(Permission permission) throws PermissionNotFoundException, PermissionExistException {
+        if (permission.getName() != null) {
+            Permission exist = findPermissionByName(permission.getName());
+            if(exist != null){
+                throw new PermissionExistException();
             }
         }
+        permissionMapper.updateByPrimaryKeySelective(permission);
+        permission = permissionMapper.selectByPrimaryKey(permission.getId());
+        if (permission == null) {
+            throw new PermissionNotFoundException();
+        }
         return permission;
+    }
+
+    public Permission findPermissionByName(String name) {
+        PermissionExample example = new PermissionExample();
+        PermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(name);
+        List<Permission> permissions = permissionMapper.selectByExample(example);
+        if (permissions != null && permissions.size() > 0) {
+            return permissions.get(0);
+        }
+        return null;
     }
 }

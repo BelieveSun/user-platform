@@ -1,5 +1,8 @@
 package com.believe.sun.user.api;
 
+import com.believe.sun.tool.DataResult;
+import com.believe.sun.tool.PageInfo;
+import com.believe.sun.tool.ResultUtil;
 import com.believe.sun.user.exception.RoleExistException;
 import com.believe.sun.user.exception.RoleNotFoundException;
 import com.believe.sun.user.form.RoleForm;
@@ -8,8 +11,7 @@ import com.believe.sun.user.model.Role;
 import com.believe.sun.user.service.RoleService;
 import com.believe.sun.user.util.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class RoleApi {
     @Autowired
     private RoleService roleService;
 
-    @ApiOperation("获取角色权限信息")
+    @ApiOperation(value = "获取角色权限信息",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}/permissions",method = GET)
     public ResponseEntity<DataResult<List<Permission>>> getRolePermissions(@PathVariable("roleId") Integer roleId){
         List<Integer> roleIds = new ArrayList<>();
@@ -42,7 +44,7 @@ public class RoleApi {
         return ResultUtil.build(ErrorCode.SUCCESS,permissions);
     }
 
-    @ApiOperation("添加角色权限")
+    @ApiOperation(value = "添加角色权限",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}/permissions",method = POST)
     public ResponseEntity<DataResult<Role>> addPermission(@PathVariable("roleId") Integer roleId,
                                                           @ApiParam("添加的权限id字符串,用','号分割") @RequestBody String permissionIds){
@@ -53,7 +55,7 @@ public class RoleApi {
         return ResultUtil.build(ErrorCode.SUCCESS,role);
     }
 
-    @ApiOperation("删除角色权限")
+    @ApiOperation(value = "删除角色权限",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}/permissions",method = DELETE)
     public ResponseEntity<DataResult<Role>> deletePermission(@PathVariable("roleId") Integer roleId,
                                                              @ApiParam("权限id字符串") @RequestParam("permissionIds") String permissionIds){
@@ -64,9 +66,9 @@ public class RoleApi {
         return ResultUtil.build(ErrorCode.SUCCESS,role);
     }
 
-    @ApiOperation("创建角色")
+    @ApiOperation(value = "创建角色",tags = "role",produces = "application/json")
     @RequestMapping(value = "",method = POST)
-    public ResponseEntity<DataResult<Role>> createRole(RoleForm form){
+    public ResponseEntity<DataResult<Role>> createRole(@RequestBody RoleForm form){
         try {
             Role role = roleService.createRole(new Role(form));
             return ResultUtil.build(ErrorCode.SUCCESS,role);
@@ -76,18 +78,18 @@ public class RoleApi {
         }
     }
 
-    @ApiOperation("获取角色列表")
+    @ApiOperation(value = "获取角色列表",tags = "role",produces = "application/json")
     @RequestMapping(method = GET)
     public ResponseEntity<DataResult<PageInfo<Role>>> getRoles(@RequestParam(value = "index",defaultValue = "1") Integer index,
                                                                @RequestParam(value = "size",defaultValue = "100") Integer size){
         List<Role> roles = roleService.findNormalRoles(index, size);
         if(roles != null && roles.size() != 0){
-            return ResultUtil.build(ErrorCode.SUCCESS,new PageInfo<Role>((PageList)roles));
+            return ResultUtil.build(ErrorCode.SUCCESS, new PageInfo<>((PageList<Role>) roles));
         }
-        return ResultUtil.build(ErrorCode.SERVICE_INNER_ERROR);
+        return ResultUtil.build(ErrorCode.ROLE_NOT_FOUND);
     }
 
-    @ApiOperation("获取角色信息")
+    @ApiOperation(value = "获取角色信息",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}",method = GET)
     public ResponseEntity<DataResult<Role>> getRole(@PathVariable("roleId") Integer roleId){
         Role role = roleService.findRoleById(roleId);
@@ -96,7 +98,7 @@ public class RoleApi {
         }
         return ResultUtil.build(ErrorCode.ROLE_NOT_FOUND);
     }
-    @ApiOperation("更新角色信息")
+    @ApiOperation(value = "更新角色信息",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}",method = PATCH)
     public ResponseEntity<DataResult<Role>> updateRole(@PathVariable("roleId") Integer roleId,
                                                        @RequestBody RoleForm form){
@@ -107,9 +109,11 @@ public class RoleApi {
             return ResultUtil.build(ErrorCode.SUCCESS,role);
         } catch (RoleNotFoundException e) {
             return ResultUtil.build(ErrorCode.ROLE_NOT_FOUND);
+        } catch (RoleExistException e) {
+            return ResultUtil.build(ErrorCode.ROLE_EXIST);
         }
     }
-    @ApiOperation("角色停用")
+    @ApiOperation(value = "角色停用",tags = "role",produces = "application/json")
     @RequestMapping(value = "/{roleId}",method = DELETE)
     public ResponseEntity deleteRole(@PathVariable("roleId") Integer roleId){
        roleService.deleteRole(roleId);

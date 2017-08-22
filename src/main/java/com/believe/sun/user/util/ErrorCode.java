@@ -1,5 +1,7 @@
 package com.believe.sun.user.util;
 
+import com.believe.sun.tool.Error;
+
 /**
  * Created by sungj on 17-7-26.
  */
@@ -13,7 +15,7 @@ public enum ErrorCode implements Error {
     PERMISSION_NAME_EXIST            (2006,"permission name is exist !","权限名已存在 ！"),
     PERMISSION_DELETE_FAILED         (2007,"permission delete failed !","权限删除失败！请检查权限状态！"),
     PERMISSION_NOT_FOUND             (2008,"permission not found !","权限未找到 ！" ),
-    ROLE_EXIST                       (2009,"role is exist !","角色已存在！" ),
+    ROLE_EXIST                       (2009,"role is exist !","角色名已存在！" ),
     ROLE_NOT_FOUND                   (2010,"role not found !","角色不存在！" ),
     USER_NOT_FOUND                   (2011,"user not found !","用户不存在！" );
 

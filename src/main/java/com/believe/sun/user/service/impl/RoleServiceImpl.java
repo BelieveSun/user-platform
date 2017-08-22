@@ -33,21 +33,19 @@ public class RoleServiceImpl implements RoleService {
         RoleExample roleExample = new RoleExample();
         roleExample.createCriteria().andRoleIn(roleNames);
         List<Role> roles = roleMapper.selectByExample(roleExample);
-       return permissionService.findPermissionByIds(getPermissionIds(roles));
+        return permissionService.findPermissionByIds(getPermissionIds(roles));
     }
 
     @Override
     public List<Permission> findPermissionByRoleIds(List<Integer> roleIds) {
-        RoleExample roleExample = new RoleExample();
-        roleExample.createCriteria().andIdIn(roleIds);
-        List<Role> roles = roleMapper.selectByExample(roleExample);
+        List<Role> roles = findRolesByIds(roleIds);
         return permissionService.findPermissionByIds(getPermissionIds(roles));
     }
 
     @Override
     public Role createRole(Role role) throws RoleExistException {
         Role oldRole = findRoleByRoleName(role.getRole());
-        if(oldRole != null){
+        if (oldRole != null) {
             throw new RoleExistException();
         }
         roleMapper.insertSelective(role);
@@ -56,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findRoleById(Integer id) {
-        return null;
+        return roleMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -65,28 +63,23 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role updateByRole(Role role) throws RoleNotFoundException {
-//        if(permissionId != null) {
-//            String oldPermissionId = oleRole.getPermissionId();
-//            String[] split = StringUtils.split(oldPermissionId, ",");
-//            HashSet<String> hashSet = new HashSet<>(Arrays.asList(split));
-//            String[] permissions = StringUtils.split(permissionId, ",");
-//            hashSet.addAll(Arrays.asList(permissions));
-//            //add new permission
-//            role.setPermissionId(StringUtils.join(hashSet,","));
-//        }
-        int i = roleMapper.updateByPrimaryKeySelective(role);
-        if(i == 0){
-            Role oldRole = roleMapper.selectByPrimaryKey(role.getId());
-            if(oldRole == null) throw new RoleNotFoundException();
+    public Role updateByRole(Role role) throws RoleNotFoundException, RoleExistException {
+        if (role.getRole() != null) {
+            Role exist = findRoleByRoleName(role.getRole());
+            if (exist != null) {
+                throw new RoleExistException();
+            }
         }
+        roleMapper.updateByPrimaryKeySelective(role);
+        role = roleMapper.selectByPrimaryKey(role.getId());
+        if (role == null) throw new RoleNotFoundException();
         return role;
     }
 
     @Override
     public void deleteRole(Integer roleId) {
         Role role = roleMapper.selectByPrimaryKey(roleId);
-        if(role.getStatus() != Constants.STOP){
+        if (role.getStatus() != Constants.STOP) {
             role.setStatus(Constants.STOP);
             roleMapper.updateByPrimaryKeySelective(role);
         }
@@ -96,14 +89,14 @@ public class RoleServiceImpl implements RoleService {
     public Role addPermission(Role role) {
         Role oldRole = findRoleById(role.getId());
         String permissionId = role.getPermissionId();
-        if(permissionId != null) {
+        if (permissionId != null) {
             String oldPermissionId = oldRole.getPermissionId();
             String[] split = StringUtils.split(oldPermissionId, ",");
             HashSet<String> hashSet = new HashSet<>(Arrays.asList(split));
             String[] permissions = StringUtils.split(permissionId, ",");
             hashSet.addAll(Arrays.asList(permissions));
             //add new permission
-            oldRole.setPermissionId(StringUtils.join(hashSet,","));
+            oldRole.setPermissionId(StringUtils.join(hashSet, ","));
             roleMapper.updateByPrimaryKeySelective(oldRole);
         }
         return oldRole;
@@ -113,39 +106,47 @@ public class RoleServiceImpl implements RoleService {
     public Role deletePermission(Role role) {
         Role oldRole = findRoleById(role.getId());
         String permissionId = role.getPermissionId();
-        if(permissionId != null){
+        if (permissionId != null) {
             String oldPermissionId = oldRole.getPermissionId();
             String[] oldPermissionIds = StringUtils.split(oldPermissionId, ",");
             List<String> deletePermissionIds = Arrays.asList(StringUtils.split(permissionId, ","));
             Set<String> newPermissionIds = new HashSet<>();
-            for(String permission : oldPermissionIds){
-                if(deletePermissionIds.contains(permission)){
+            for (String permission : oldPermissionIds) {
+                if (deletePermissionIds.contains(permission)) {
                     continue;
                 }
                 newPermissionIds.add(permission);
             }
-            oldRole.setPermissionId(StringUtils.join(newPermissionIds,","));
+            oldRole.setPermissionId(StringUtils.join(newPermissionIds, ","));
             roleMapper.updateByPrimaryKeySelective(oldRole);
         }
         return oldRole;
     }
 
-    public Role findRoleByRoleName(String role){
+    @Override
+    public List<Role> findRolesByIds(List<Integer> ids) {
+        RoleExample example = new RoleExample();
+        example.createCriteria().andIdIn(ids).andStatusEqualTo(Constants.NORMAL);
+        List<Role> roles = roleMapper.selectByExample(example);
+        return roles;
+    }
+
+    public Role findRoleByRoleName(String role) {
         RoleExample roleExample = new RoleExample();
         roleExample.createCriteria().andRoleEqualTo(role);
         List<Role> roles = roleMapper.selectByExample(roleExample);
-        if(roles != null && roles.size() > 0){
+        if (roles != null && roles.size() > 0) {
             return roles.get(0);
         }
         return null;
     }
 
 
-    private List<Integer> getPermissionIds(List<Role> roles){
+    private List<Integer> getPermissionIds(List<Role> roles) {
         List<Integer> permissionIds = new ArrayList<>();
-        for (Role r : roles){
-            for (String permissionId :r.getPermissionId().split(",")){
-                if(!permissionIds.contains(Integer.valueOf(permissionId))){
+        for (Role r : roles) {
+            for (String permissionId : r.getPermissionId().split(",")) {
+                if (!permissionIds.contains(Integer.valueOf(permissionId))) {
                     permissionIds.add(Integer.valueOf(permissionId));
                 }
             }

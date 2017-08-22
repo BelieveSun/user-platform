@@ -1,8 +1,10 @@
 package com.believe.sun.user.model;
 
 import com.believe.sun.user.form.UserForm;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class User {
+
     private Integer id;
 
     private String account;
@@ -10,7 +12,7 @@ public class User {
     private String cellphone;
 
     private String email;
-
+    @JsonIgnore
     private String password;
 
     private String nickname;

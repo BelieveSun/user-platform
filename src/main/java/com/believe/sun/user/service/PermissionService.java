@@ -21,5 +21,5 @@ public interface PermissionService {
 
     Permission findPermissionById(Integer permissionId);
 
-    Permission updatePermission(Permission permission) throws PermissionNotFoundException;
+    Permission updatePermission(Permission permission) throws PermissionNotFoundException, PermissionExistException;
 }

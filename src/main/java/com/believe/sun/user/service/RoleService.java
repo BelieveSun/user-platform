@@ -21,11 +21,13 @@ public interface RoleService {
 
     List<Role> findNormalRoles(Integer index, Integer size);
 
-    Role updateByRole(Role role) throws RoleNotFoundException;
+    Role updateByRole(Role role) throws RoleNotFoundException, RoleExistException;
 
     void deleteRole(Integer roleId);
 
     Role addPermission(Role role);
 
     Role deletePermission(Role role);
+
+    List<Role> findRolesByIds(List<Integer> ids);
 }

@@ -4,13 +4,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by sungj on 17-7-28.
  */
 @ApiModel("权限表单")
 public class PermissionForm {
     @ApiModelProperty("父权限id,一级权限父权限为0")
-    @NotEmpty
+    @NotNull
     private Integer parentId;
     @ApiModelProperty("格式：user:*(表示具有user的所有权限) 或者 user:create(表示具有创建用户的权限) ...")
     @NotEmpty

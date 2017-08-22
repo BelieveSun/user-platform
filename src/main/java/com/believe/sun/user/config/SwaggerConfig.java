@@ -7,10 +7,14 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
 
 /**
  * Created by sungj on 17-6-6.
@@ -23,7 +27,10 @@ public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
+        ArrayList<SecurityScheme> list = new ArrayList<>();
+        list.add(apiKey());
         return new Docket(DocumentationType.SWAGGER_2)
+                .securitySchemes(list)
                 .apiInfo(apiInfo())
                 .enable(enable)
                 .select()
@@ -31,6 +38,11 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "OAuth2 Token", "header");
+    }
+
     private ApiInfo apiInfo() {
         Contact contact = new Contact("sungj","","15680028136@163.com");
         return new ApiInfoBuilder()
