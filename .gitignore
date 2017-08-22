@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 application.properties
+user-platform.iml
 
 # Log file
 *.log
